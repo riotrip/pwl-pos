@@ -79,6 +79,15 @@
             </li>
             <li class="nav-item">
                 <a
+                    href="{{ url('/supplier') }}"
+                    class="nav-link {{ ($activeMenu == 'supplier')? 'active' : '' }} "
+                >
+                    <i class="nav-icon fa fa-users"></i>
+                    <p>Supplier Barang</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
                     href="{{ url('/barang') }}"
                     class="nav-link {{ ($activeMenu =='barang')? 'active' : '' }} "
                 >
