@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\LevelModel;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -248,7 +250,7 @@ class UserController extends Controller
         $user = UserModel::find($id);
         return view('user.confirm_ajax', ['user' => $user]);
     }
-    
+
     public function delete_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
@@ -262,7 +264,32 @@ class UserController extends Controller
         }
         return redirect('/');
     }
-    
+
+    public function gambar()
+    {
+        return view('user.upload_gambar');
+    }
+
+    public function upload_gambar(Request $request)
+    {
+        $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/gambar_profile'), $filename);
+            $user->gambar = $filename;
+        }
+
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Gambar berhasil diperbarui.']);
+    }
+
     // public function index()
     // {
     //     // $data = [
