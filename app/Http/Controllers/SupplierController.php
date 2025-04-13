@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\SupplierModel;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class SupplierController extends Controller
@@ -29,17 +30,29 @@ class SupplierController extends Controller
     {
         $suppliers = SupplierModel::select('supplier_id', 'supplier_kode', 'supplier_nama');
 
-        return DataTables::of($suppliers)
-            ->addIndexColumn()
-            ->addColumn('aksi', function ($supplier) {
-                $btn = '<a href="' . url('/supplier/' . $supplier->supplier_id) . '" class="btn btn-info btn-sm"> Detail</a> ';
-                $btn .= '<a href="' . url('/supplier/' . $supplier->supplier_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/supplier/' . $supplier->supplier_id) . '">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
-                return $btn;
-            })
-            ->rawColumns(['aksi'])
-            ->make(true);
+        return DataTables::of($suppliers)->addIndexColumn()->addColumn('aksi', function ($supplier) {
+            $btn = '<a href="' . url('/supplier/' . $supplier->supplier_id) . '" class="btn btn-info btn-sm">Detail</a> ';
+            $btn .= '<a href="' . url('/supplier/' . $supplier->supplier_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
+            $btn .= '<form class="d-inline-block" method="POST" action="' . url('/supplier/' . $supplier->supplier_id) . '">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
+            return $btn;
+        })->rawColumns(['aksi'])->make(true);
     }
+
+    // public function list(Request $request)
+    // {
+    //     $suppliers = SupplierModel::select('supplier_id', 'supplier_kode', 'supplier_nama');
+
+    //     return DataTables::of($suppliers)
+    //         ->addIndexColumn()
+    //         ->addColumn('aksi', function ($supplier) {
+    //             $btn = '<a href="' . url('/supplier/' . $supplier->supplier_id) . '" class="btn btn-info btn-sm"> Detail</a> ';
+    //             $btn .= '<a href="' . url('/supplier/' . $supplier->supplier_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
+    //             $btn .= '<form class="d-inline-block" method="POST" action="' . url('/supplier/' . $supplier->supplier_id) . '">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
+    //             return $btn;
+    //         })
+    //         ->rawColumns(['aksi'])
+    //         ->make(true);
+    // }
 
     public function create()
     {
@@ -136,6 +149,83 @@ class SupplierController extends Controller
             return redirect('/supplier')->with('success', 'Data supplier berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/supplier')->with('error', 'Data supplier gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+        }
+    }
+
+    public function create_ajax()
+    {
+        return view('supplier.create_ajax');
+    }
+
+    public function store_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'supplier_kode' => 'required',
+                'supplier_nama' => 'required',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => false, 'message' => 'Validasi Gagal', 'msgField' => $validator->errors()->all()]);
+            }
+
+            SupplierModel::create($request->all());
+            return response()->json(['status' => true, 'message' => 'Data supplier berhasil ditambahkan!']);
+        }
+        redirect('/supplier');
+    }
+
+    public function edit_ajax($id)
+    {
+        $supplier = SupplierModel::find($id);
+        return view('supplier.edit_ajax', ['supplier' => $supplier]);
+    }
+
+    public function update_ajax(Request $request, $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'supplier_kode' => 'required',
+                'supplier_nama' => 'required',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => false, 'message' => 'Validasi Gagal', 'msgField' => $validator->errors()->all()]);
+            }
+
+            SupplierModel::where('supplier_id', $id)
+                ->update([
+                    'supplier_kode' => $request->supplier_kode,
+                    'supplier_nama' => $request->supplier_nama,
+                ]);
+
+            return response()->json(['status' => true, 'message' => 'Data supplier berhasil diubah!']);
+        }
+        redirect('/supplier');
+    }
+
+    public function confirm_ajax($id)
+    {
+        $supplier = SupplierModel::find($id);
+        return response()->json(['status' => true, 'data' => $supplier]);
+    }
+    
+    public function delete_ajax($id)
+    {
+        $check = SupplierModel::find($id);
+        if (!$check) {
+            return response()->json(['status' => false, 'message' => 'Data supplier tidak ditemukan']);
+        }
+
+        try {
+            SupplierModel::destroy($id);
+            return response()->json(['status' => true, 'message' => 'Data supplier berhasil dihapus']);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['status' => false, 'message' => 'Data supplier gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini']);
         }
     }
 }

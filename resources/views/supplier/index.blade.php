@@ -8,6 +8,7 @@
                 href="{{ url('supplier/create') }}"
                 >Tambah</a
             >
+            <button class="btn btn-sm btn-success mt-1" onclick="modalAction('{{ url('supplier/create_ajax') }}')">Tambah Ajax</button>
         </div>
     </div>
     <div class="card-body">
@@ -32,8 +33,11 @@
         </table>
     </div>
 </div>
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection @push('css') @endpush @push('js')
 <script>
+    function modalAction(url = ''){ $('#myModal').load(url,function(){ $('#myModal').modal('show'); }); }
+
     $(document).ready(function () {
         var dataSupplier = $("#table_supplier").DataTable({
             serverSide: true,
