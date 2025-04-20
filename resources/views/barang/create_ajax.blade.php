@@ -37,26 +37,6 @@
                     ></small>
                 </div>
                 <div class="form-group">
-                    <label>Supplier Barang</label>
-                    <select
-                        name="supplier_id"
-                        id="supplier_id"
-                        class="form-control"
-                        required
-                    >
-                        <option value="">- Pilih Supplier -</option>
-                        @foreach($supplier as $s)
-                        <option value="{{ $s->supplier_id }}">
-                            {{ $s->supplier_nama }}
-                        </option>
-                        @endforeach
-                    </select>
-                    <small
-                        id="error-supplier_id"
-                        class="error-text form-text text-danger"
-                    ></small>
-                </div>
-                <div class="form-group">
                     <label>Kode</label>
                     <input
                         value=""
@@ -135,7 +115,6 @@
         $("#form-tambah").validate({
             rules: {
                 kategori_id: { required: true },
-                supplier_id: { required: true },
                 barang_kode: { required: true },
                 barang_nama: { required: true },
                 harga_beli: { required: true },

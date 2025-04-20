@@ -29,7 +29,6 @@
                     <th>Harga Beli</th>
                     <th>Harga Jual</th>
                     <th>Kategori</th>
-                    <th>Supplier</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -85,12 +84,6 @@
                 },
                 {
                     data: "kategori.kategori_nama",
-                    className: "",
-                    orderable: false,
-                    searchable: false,
-                },
-                {
-                    data: "supplier.supplier_nama",
                     className: "",
                     orderable: false,
                     searchable: false,

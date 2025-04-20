@@ -17,7 +17,6 @@ class BarangSeeder extends Seeder
             [
                 'barang_id' => 1,
                 'kategori_id' => 1,
-                'supplier_id' => 1,
                 'barang_kode' => 'ELK001',
                 'barang_nama' => 'Laptop Asus',
                 'harga_beli' => 10000000,
@@ -27,7 +26,6 @@ class BarangSeeder extends Seeder
             [
                 'barang_id' => 2,
                 'kategori_id' => 1,
-                'supplier_id' => 2,
                 'barang_kode' => 'ELK002',
                 'barang_nama' => 'Laptop Acer',
                 'harga_beli' => 12000000,

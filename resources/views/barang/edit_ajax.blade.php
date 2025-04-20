@@ -24,10 +24,6 @@
                             <option value="">- Pilih Kategori -</option> @foreach($kategori as $k) <option {{ ($k->kategori_id == $user->kategori_id)? 'selected' : '' }} value="{{ $k->kategori_id }}">{{ $k->kategori_nama }}</option> @endforeach
                             </select> <small id="error-kategori_id" class="error-text form-text text-danger"></small> 
                         </div>
-                        <div class="form-group"> <label>Supplier Barang</label> <select name="supplier_id" id="supplier_id" class="form-control" required>
-                            <option value="">- Pilih Supplier -</option> @foreach($supplier as $s) <option {{ ($s->supplier_id == $user->supplier_id)? 'selected' : '' }} value="{{ $s->supplier_id }}">{{ $s->supplier_nama }}</option> @endforeach
-                            </select> <small id="error-supplier_id" class="error-text form-text text-danger"></small> 
-                        </div>
                         <div class="form-group"> <label>Barang Kode</label> <input value="{{ $barang->barang_kode }}" type="text" name="barang_kode" id="barang_kode" class="form-control" required> <small id="error-barang_kode" class="error-text form-text text-danger"></small> </div>
                         <div class="form-group"> <label>Barang Nama</label> <input value="{{ $barang->barang_nama }}" type="text" name="barang_nama" id="barang_nama" class="form-control" required> <small id="error-barang_nama" class="error-text form-text text-danger"></small> </div>
                         <div class="form-group"> <label>Harga Beli</label> <input value="{{ $barang->harga_beli }}" type="num" name="harga_beli" id="harga_beli" class="form-control" required> <small id="error-harga_beli" class="error-text form-text text-danger"></small> </div>
@@ -42,7 +38,6 @@
                 $("#form-edit").validate({
                     rules: {
                         kategori_id: { required: true },
-                        supplier_id: { required: true },
                         barang_kode: { required: true },
                         barang_nama: { required: true },
                         harga_beli: { required: true },

@@ -36,10 +36,6 @@
                 <th>Kategori</th>
                 <td>{{ $barang->kategori->kategori_nama }}</td>
             </tr>
-            <tr>
-                <th>Supplier</th>
-                <td>{{ $barang->supplier->supplier_nama }}</td>
-            </tr>
         </table>
         @endempty
         <a href="{{ url('barang') }}" class="btn btn-sm btn-default mt-2"

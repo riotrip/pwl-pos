@@ -24,10 +24,6 @@
                         <td class="col-9">{{ $barang->kategori->kategori_nama }}</td>
                     </tr>
                     <tr>
-                        <th class="text-right col-3">Supplier Barang :</th>
-                        <td class="col-9">{{ $barang->supplier->supplier_nama }}</td>
-                    </tr>
-                    <tr>
                         <th class="text-right col-3">Barang Kode :</th>
                         <td class="col-9">{{ $barang->barang_kode }}</td>
                     </tr>
