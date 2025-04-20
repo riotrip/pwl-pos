@@ -49,8 +49,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [UserController::class], 'confirm_ajax');
             Route::delete('/{id}/delete_ajax', [UserController::class], 'delete_ajax');
             Route::delete('/{id}', [UserController::class, 'destroy']);
-            Route::get('/gambar', [UserController::class, 'gambar']);
+            Route::get('/edit_profile', [UserController::class, 'edit_profile']);
             Route::post('/upload_gambar', [UserController::class, 'upload_gambar']);
+            Route::post('delete_gambar', [UserController::class, 'delete_gambar']);
         });
 
         Route::group(['prefix' => 'level'], function () {

@@ -127,16 +127,32 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="{{ asset('uploads/gambar_profile/' . Auth::user()->gambar) }}" class="img-circle img-size-32" alt="User Image" />
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="/user/edit_profile" class="dropdown-item">
+            <i class="fas fa-user mr-2"></i> Profile
+          </a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-item">
+            <form id="logout-form" method="POST" action="/logout">
+              @csrf
+              <button class="btn btn-link text-left p-0 m-0" type="submit" style="color: inherit; text-decoration: none;">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+              </button>
+            </form>
+          </div>
+        </div>
+      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
       </li>
     </ul>
-    <form id="logout-form" method="POST" action="/logout">
-      @csrf
-      <button class="btn btn-danger" type="submit">Logout</button>
-    </form>
 
   </nav>
   <!-- /.navbar -->
+  
