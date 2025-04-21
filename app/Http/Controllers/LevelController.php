@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\LevelModel;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LevelController extends Controller
 {

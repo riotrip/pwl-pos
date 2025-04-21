@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\SupplierModel;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SupplierController extends Controller
 {
@@ -213,7 +215,7 @@ class SupplierController extends Controller
         $supplier = SupplierModel::find($id);
         return response()->json(['status' => true, 'data' => $supplier]);
     }
-    
+
     public function delete_ajax($id)
     {
         $check = SupplierModel::find($id);
