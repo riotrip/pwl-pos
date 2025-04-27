@@ -7,6 +7,7 @@ use Monolog\Level;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
+use App\Http\Controllers\Api\BarangController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,6 +43,12 @@ Route::post('/kategories', [KategoriController::class, 'store']);
 Route::get('/kategories/{kategori}', [KategoriController::class, 'show']);
 Route::put('/kategories/{kategori}', [KategoriController::class, 'update']);
 Route::delete('/kategories/{kategori}', [KategoriController::class, 'destroy']);
+
+Route::get('/barangs', [BarangController::class, 'index']);
+Route::post('/barangs', [BarangController::class, 'store']);
+Route::get('/barangs/{kategori}', [BarangController::class, 'show']);
+Route::put('/barangs/{kategori}', [BarangController::class, 'update']);
+Route::delete('/barangs/{kategori}', [BarangController::class, 'destroy']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
