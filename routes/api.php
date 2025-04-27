@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Monolog\Level;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Api\KategoriController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,6 +37,11 @@ Route::get('/users/{user}', [UserController::class, 'show']);
 Route::put('/users/{user}', [UserController::class, 'update']);
 Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
+Route::get('/kategories', [KategoriController::class, 'index']);
+Route::post('/kategories', [KategoriController::class, 'store']);
+Route::get('/kategories/{kategori}', [KategoriController::class, 'show']);
+Route::put('/kategories/{kategori}', [KategoriController::class, 'update']);
+Route::delete('/kategories/{kategori}', [KategoriController::class, 'destroy']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
