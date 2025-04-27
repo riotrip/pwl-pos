@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\SupplierController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,6 +51,12 @@ Route::post('/barangs', [BarangController::class, 'store']);
 Route::get('/barangs/{barang}', [BarangController::class, 'show']);
 Route::put('/barangs/{barang}', [BarangController::class, 'update']);
 Route::delete('/barangs/{barang}', [BarangController::class, 'destroy']);
+
+Route::get('/suppliers', [SupplierController::class, 'index']);
+Route::post('/suppliers', [SupplierController::class, 'store']);
+Route::get('/suppliers/{supplier}', [SupplierController::class, 'show']);
+Route::put('/suppliers/{supplier}', [SupplierController::class, 'update']);
+Route::delete('/suppliers/{supplier}', [SupplierController::class, 'destroy']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
