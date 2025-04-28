@@ -34,8 +34,8 @@
                                 <div class="border rounded p-2 h-100">
                                     <p class="text-center fw-bold text-muted mb-2">Gambar Saat Ini</p>
                                     @auth
-                                    @if(Auth::user()->gambar)
-                                    <img src="{{ asset('uploads/gambar_profile/' . Auth::user()->gambar) }}"
+                                    @if(Auth::user()->image)
+                                    <img src="{{ asset('uploads/image_profile/' . Auth::user()->image) }}"
                                         class="img-thumbnail preview-image img-fluid w-100">
                                     @else
                                     <div class="d-flex align-items-center justify-content-center bg-light"
@@ -68,7 +68,7 @@
                                 <button type="button" class="btn btn-primary">
                                     <i class="fas fa-upload me-2"></i> Pilih Gambar
                                 </button>
-                                <input type="file" id="gambarInput"
+                                <input type="file" id="imageInput"
                                     class="position-absolute top-0 start-0 w-100 h-100 opacity-0"
                                     accept="image/*"
                                     onchange="previewNewImage(this)">
@@ -80,7 +80,7 @@
                             </button>
 
                             @auth
-                            @if(Auth::user()->gambar)
+                            @if(Auth::user()->image)
                             <button type="button" class="btn btn-danger" onclick="deleteImage()" id="deleteBtn">
                                 <i class="fas fa-trash me-2"></i> Hapus
                             </button>
@@ -147,7 +147,7 @@
         }
 
         function cancelUpload() {
-            $('#gambarInput').val('');
+            $('#imageInput').val('');
             $('#newImagePreview').html(
                 '<div class="d-flex align-items-center justify-content-center bg-light" style="height: 200px">' +
                 '<span class="text-muted">Belum dipilih</span></div>'
@@ -165,11 +165,11 @@
             $('#confirmUpload').prop('disabled', true);
 
             const formData = new FormData();
-            formData.append('gambar', selectedFile);
+            formData.append('image', selectedFile);
             formData.append('_token', '{{ csrf_token() }}');
 
             $.ajax({
-                url: '/user/upload_gambar',
+                url: '/user/upload_image',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -188,7 +188,7 @@
                     if (response.success) {
                         showMessage('Gambar berhasil diupload!', 'success');
                         if (response.filename) {
-                            $('.preview-image').first().attr('src', '{{ asset("uploads/gambar_profile") }}/' + response.filename);
+                            $('.preview-image').first().attr('src', '{{ asset("uploads/image_profile") }}/' + response.filename);
                             if (!$('#deleteBtn').length) {
                                 $('.btn-primary').after(
                                     `<button type="button" class="btn btn-danger" onclick="deleteImage()" id="deleteBtn">` +
@@ -214,7 +214,7 @@
         function deleteImage() {
             if (confirm('Apakah Anda yakin ingin menghapus gambar profil saat ini?')) {
                 $.ajax({
-                    url: '/user/delete_gambar',
+                    url: '/user/delete_image',
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}'

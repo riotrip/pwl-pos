@@ -129,7 +129,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-            <img src="{{ asset('uploads/gambar_profile/' . Auth::user()->gambar) }}" class="img-circle img-size-32" alt="User Image" />
+            <img src="{{ asset('uploads/image_profile/' . Auth::user()->image) }}" class="img-circle img-size-32" alt="User Image" />
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="/user/edit_profile" class="dropdown-item">

@@ -267,10 +267,10 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function upload_gambar(Request $request)
+    public function upload_image(Request $request)
     {
         $request->validate([
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = Auth::user();
@@ -282,22 +282,22 @@ class UserController extends Controller
             ], 404);
         }
 
-        if ($request->hasFile('gambar')) {
-            $file = $request->file('gambar');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
 
-            $file->move(public_path('uploads/gambar_profile'), $filename);
+            $file->move(public_path('uploads/image_profile'), $filename);
 
-            if ($user->gambar && file_exists(public_path('uploads/gambar_profile/' . $user->gambar))) {
-                unlink(public_path('uploads/gambar_profile/' . $user->gambar));
+            if ($user->image && file_exists(public_path('uploads/image_profile/' . $user->image))) {
+                unlink(public_path('uploads/image_profile/' . $user->image));
             }
 
-            $user->gambar = $filename;
+            $user->image = $filename;
             $user->save();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Gambar berhasil diperbarui',
+                'message' => 'image berhasil diperbarui',
                 'filename' => $filename
             ]);
         }
@@ -320,24 +320,24 @@ class UserController extends Controller
         return view('user.edit_profile', ['user' => $user, 'breadcrumb' => $breadcrumb]);
     }
 
-    public function delete_gambar(Request $request)
+    public function delete_image(Request $request)
     {
         $user = Auth::user();
 
-        if ($user->gambar) {
-            $path = 'uploads/gambar_profile/' . $user->gambar;
+        if ($user->image) {
+            $path = 'uploads/image_profile/' . $user->image;
 
             if (Storage::exists($path)) {
                 Storage::delete($path);
             }
 
-            $user->gambar = null;
+            $user->image = null;
             $user->save();
 
-            return response()->json(['success' => true, 'message' => 'Gambar berhasil dihapus.']);
+            return response()->json(['success' => true, 'message' => 'image berhasil dihapus.']);
         }
 
-        return response()->json(['success' => false, 'message' => 'Gambar tidak ditemukan.']);
+        return response()->json(['success' => false, 'message' => 'image tidak ditemukan.']);
     }
 
     public function import()
