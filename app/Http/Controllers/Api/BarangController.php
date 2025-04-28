@@ -16,15 +16,15 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'barang_kode' => 'required',
-            'barang_nama' => 'required',
-            'harga_beli' => 'required',
-            'harga_jual' => 'required',
-            'kategori_id' => 'required',
+        $barang = BarangModel::create([
+            'barang_kode' => $request->barang_kode,
+            'barang_nama' => $request->barang_nama,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'kategori_id' => $request->kategori_id,
+            'image' => $request->image->hashName(),
         ]);
 
-        $barang = BarangModel::create($request->all());
         return response()->json($barang, 201);
     }
 
@@ -41,6 +41,7 @@ class BarangController extends Controller
             'harga_beli' => 'sometimes',
             'harga_jual' => 'sometimes',
             'kategori_id' => 'sometimes',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $barang->update($request->all());
